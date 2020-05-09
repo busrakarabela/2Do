@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitleView"
+        android:textSize="16sp"
+        android:textColor="@color/pumpkin_orange"
+        android:fontFamily="@font/raleway_bold"
+        android:padding="10dp">
+
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitleView"
+        android:id="@+id/txtMsgView"
+        android:textSize="12sp"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_regular"
+        android:padding="10dp">
+
+    </TextView>
+
+</RelativeLayout>

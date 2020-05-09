@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hatırlatıcı"
+        android:fontFamily="@font/raleway_bold"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:id="@+id/title"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:singleLine="true"
+        android:id="@+id/dt_tarih"
+        android:hint="@string/hint_tarih"
+        android:paddingLeft="20dp"
+        android:textColor="@color/charcoal_grey"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="@color/charcoal_grey"
+        android:fontFamily="@font/raleway_regular">
+
+    </EditText>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/brownish_grey"
+        android:layout_margin="10dp"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:id="@+id/line"
+        android:layout_below="@+id/dt_tarih">
+
+    </ImageView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/line"
+        android:singleLine="true"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:id="@+id/dt_saat"
+        android:hint="@string/hint_saat"
+        android:paddingLeft="20dp"
+        android:textColor="@color/charcoal_grey"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="@color/charcoal_grey"
+        android:fontFamily="@font/raleway_regular">
+
+    </EditText>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/brownish_grey"
+        android:layout_margin="10dp"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:id="@+id/line2"
+        android:layout_below="@+id/dt_saat">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line2"
+        android:weightSum="3"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
+
+        </TextView>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="İptal"
+            android:id="@+id/btn_cancel"
+            android:textColor="@color/black"
+            android:fontFamily="@font/raleway_bold">
+
+        </Button>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edt_style"
+            android:text="Kaydet"
+            android:id="@+id/btn_saveDate"
+            android:textColor="@color/black"
+            android:fontFamily="@font/raleway_bold">
+
+        </Button>
+
+    </LinearLayout>
+
+</RelativeLayout>

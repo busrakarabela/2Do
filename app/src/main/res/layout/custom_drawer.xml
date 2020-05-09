@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/drawer_icon"
+        app:srcCompat="@drawable/icon"
+        app:layout_constraintDimensionRatio="H,1:1"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.1">
+
+    </ImageView>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_close"
+        android:background="@drawable/close_icon"
+        android:backgroundTint="@color/brownish_grey"
+        app:layout_constraintDimensionRatio="H,1:1"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.11"
+        app:layout_constraintHorizontal_bias="0.8">
+
+    </ImageView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2Do List"
+        android:textColor="@color/brownish_grey"
+        android:textSize="14sp"
+        android:id="@+id/header"
+        android:fontFamily="@font/raleway_extrabold"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/drawer_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.03"
+        >
+    </TextView>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brownish_grey"
+        android:id="@+id/line"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        android:layout_margin="20dp"
+        >
+    </ImageView>
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/icon_lamp"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/icon_notes"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notlar"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_bold"
+        android:id="@+id/notes"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </TextView>
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/icon_alarm"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/icon_remenders"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/icon_notes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hatırlatıcılar"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_bold"
+        android:id="@+id/reminders"
+        app:layout_constraintTop_toBottomOf="@+id/notes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/notes"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </TextView>
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brownish_grey"
+        android:id="@+id/line2"
+        app:layout_constraintTop_toBottomOf="@+id/reminders"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        android:layout_margin="20dp"
+        >
+    </ImageView>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/icon_add"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/icon_new"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yeni Not Oluştur"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_bold"
+        android:id="@+id/new_notes"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/notes"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </TextView>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/icon_tag"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/icon_archive"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/icon_new"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Etiket Ekle"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_bold"
+        android:id="@+id/archive"
+        app:layout_constraintTop_toBottomOf="@+id/new_notes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/notes"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </TextView>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brownish_grey"
+        android:id="@+id/line3"
+        app:layout_constraintTop_toBottomOf="@+id/archive"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        android:layout_margin="20dp"
+        >
+    </ImageView>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/icon_trash"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/icon_trash"
+        app:layout_constraintStart_toStartOf="@+id/drawer_icon"
+        app:layout_constraintTop_toBottomOf="@+id/line3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Çöp Kutusu"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/raleway_bold"
+        android:id="@+id/trash"
+        app:layout_constraintTop_toBottomOf="@+id/line3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/notes"
+        android:layout_marginTop="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </TextView>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

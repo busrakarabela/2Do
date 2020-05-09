@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="position"
+            type="int" />
+        <variable
+            name="note"
+            type="com.example.a2do.model.Note" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/ll_dot"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="20dp"
+            android:id="@+id/dot"
+            android:backgroundTint="@color/dark_mint"
+            android:layout_marginTop="15dp"
+
+            android:background="@drawable/dot"
+            tools:ignore="MissingConstraints">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+   <TextView
+       android:layout_width="0dp"
+       app:layout_constraintWidth_percent="0.7"
+       android:layout_height="match_parent"
+       android:id="@+id/txt_baslik"
+       android:textColor="@color/brownish_grey"
+       android:text="@{note.baslik}"
+       android:fontFamily="@font/raleway_bold"
+       android:textSize="16sp"
+       android:padding="10dp"
+       android:layout_margin="10dp"
+       tools:ignore="MissingConstraints"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent">
+
+   </TextView>
+
+
+   <RelativeLayout
+       android:layout_width="0dp"
+       android:layout_height="match_parent"
+       android:gravity="center"
+       app:layout_constraintWidth_percent="0.2"
+       app:layout_constraintHorizontal_bias="1"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+
+       tools:ignore="MissingConstraints">
+
+
+       <com.airbnb.lottie.LottieAnimationView
+           android:layout_width="21dp"
+           android:layout_height="21dp"
+           app:lottie_fileName="check_anim.json"
+           android:id="@+id/rd_select"
+           android:layout_margin="15dp"
+
+           android:background="@drawable/checkbox_empty"
+           tools:ignore="MissingConstraints">
+
+
+       </com.airbnb.lottie.LottieAnimationView>
+   </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brownish_grey"
+        android:id="@+id/line3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_baslik"
+        app:layout_constraintStart_toStartOf="@+id/txt_baslik"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        >
+    </ImageView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

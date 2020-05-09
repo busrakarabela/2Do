@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">2Do</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_notes">Notlar</string>
+    <string name="menu_reminders">Hatırlatıcılar</string>
+    <string name="menu_new">Yeni Not Oluştur</string>
+    <string name="menu_archive">Arşiv</string>
+    <string name="menu_trash">Çöp Kutusu</string>
+    <string name="menu_send">Send</string>
+    <string name="nav_title">2Do List</string>
+
+    <string name="hint_header"><font size="24">Başlık</font></string>
+    <string name="hint_note"><font size="20">Not</font></string>
+    <string name="hint_reminders"><font size="16">Hatırlatıcı eklemek  için dokunun</font></string>
+    <string name="hint_search"><font size="20">Notlarınızda Arayın</font></string>
+    <string name="hint_tag"><font size="20">Etiketlerde Arayın</font></string>
+    <string name="hint_tarih"><font size="20">Bir tarih seçin</font></string>
+    <string name="hint_saat"><font size="20">Bir saat seçin</font></string>
+    <string name="alarm1">Alarm1</string>
+    <string name="notification">Notification</string>
+</resources>
