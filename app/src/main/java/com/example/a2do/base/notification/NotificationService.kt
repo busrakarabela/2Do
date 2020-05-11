@@ -70,8 +70,8 @@ class NotificationService : IntentService("NotificationService") {
             var notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notifyIntent = Intent(this, ResultActivity::class.java)
 
-            val title = "Sample Notification"
-            val message = "You have received a sample notification. This notification will take you to the details page."
+            val title = "Yaklaşan bir etkinlik var"
+            val message = "Etkinliğe gitmek için dokun"
 
             notifyIntent.putExtra("title", title)
             notifyIntent.putExtra("message", message)

@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.example.a2do.R
 import com.example.a2do.base.BaseActivity
+import com.example.a2do.base.notification.NotificationUtils
 import com.example.a2do.model.Note
 import com.example.a2do.ui.tag.TagFragment
 import com.example.a2do.ui.home.HomeFragment
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.custom_drawer.*
 import kotlinx.android.synthetic.main.custom_drawer.view.*
+import java.util.*
 
 class MainActivity :  BaseActivity<ViewDataBinding, MainViewModel>() {
 
@@ -41,9 +43,9 @@ class MainActivity :  BaseActivity<ViewDataBinding, MainViewModel>() {
 
 
 
-     //   if (!mNotified) {
-      //      NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
-      //  }
+        //if (!mNotified) {
+        //    NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
+       // }
 
         val drawerLayout: DrawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         appBarConfiguration = AppBarConfiguration(

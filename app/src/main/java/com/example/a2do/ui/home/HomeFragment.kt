@@ -1,5 +1,6 @@
 package com.example.a2do.ui.home
 
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,8 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2do.R
-
-
 import com.example.a2do.base.BaseFragment
 import com.example.a2do.base.notification.NotificationUtils
 import com.example.a2do.databinding.FragmentHomeBinding
@@ -20,9 +19,9 @@ import com.example.a2do.model.NoteList
 import com.example.a2do.ui.main.MainViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import java.text.SimpleDateFormat
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
@@ -48,8 +47,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
     val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
 
 
-    private val mNotificationTime = Calendar.getInstance() //Set after 5 seconds from the current time.
-    private  var alarmtime=Calendar.getInstance()
+    private val mNotificationTime = Calendar.getInstance().timeInMillis + 5000//Set after 5 seconds from the current time.
+    private lateinit var alarmtime:Calendar
 
     private val currentdate=Calendar.getInstance()
 
@@ -176,9 +175,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
             }
         }
 
-        if (!mNotified) {
 
-         NotificationUtils().setNotification(alarmtime.timeInMillis, context!!)
+
+        if (!mNotified) {
+            NotificationUtils().setNotification(mNotificationTime, context!!)
         }
 
 
@@ -195,4 +195,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
         showlist.get(position).isDeleted = boolean
 
     }
+
+
 }

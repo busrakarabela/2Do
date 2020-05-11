@@ -18,9 +18,11 @@
     <string name="hint_header"><font size="24">Başlık</font></string>
     <string name="hint_note"><font size="20">Not</font></string>
     <string name="hint_reminders"><font size="16">Hatırlatıcı eklemek  için dokunun</font></string>
+    <string name="hint_location"><font size="16">Konum eklemek  için dokunun</font></string>
     <string name="hint_search"><font size="20">Notlarınızda Arayın</font></string>
     <string name="hint_tag"><font size="20">Etiketlerde Arayın</font></string>
     <string name="hint_tarih"><font size="20">Bir tarih seçin</font></string>
+    <string name="hint_konum"><font size="20">Konum seç</font></string>
     <string name="hint_saat"><font size="20">Bir saat seçin</font></string>
     <string name="alarm1">Alarm1</string>
     <string name="notification">Notification</string>

@@ -1,17 +1,20 @@
 package com.example.a2do.ui.newnote
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2do.R
 import com.example.a2do.base.BaseFragment
-import com.example.a2do.base.BaseVMFragment
 import com.example.a2do.databinding.FragmentNewnoteBinding
 import com.example.a2do.model.AlarmTime
 import com.example.a2do.model.Note
@@ -20,7 +23,10 @@ import com.example.a2do.ui.main.MainViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_newnote.*
 import kotlinx.android.synthetic.main.fragment_newnote.view.*
-import kotlinx.android.synthetic.main.popup.*
+import kotlinx.android.synthetic.main.popup_location.*
+import kotlinx.android.synthetic.main.popup_noti.*
+import kotlinx.android.synthetic.main.popup_noti.btn_cancel
+import kotlinx.android.synthetic.main.popup_noti.btn_saveDate
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -40,7 +46,8 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
     private val alarmtime=Calendar.getInstance()
 
 
-    private lateinit var dialog: Dialog
+    private lateinit var dialogNoti: Dialog
+    private lateinit var dialogLoc:Dialog
 
     private lateinit var allnote:NoteList
 
@@ -58,6 +65,8 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
     var formathour: DateFormat= SimpleDateFormat("HH:mm")
 
     var alarmSet:Boolean=false
+
+     var PERMISSION_ID:Int=42
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,15 +112,21 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         }
 
         mview.edt_reminders.keyListener=null
+        mview.edt_location.keyListener=null
 
 
         mview.edt_reminders.setOnClickListener {
-            dialog.show()
+            dialogNoti.show()
+        }
+        mview.edt_location.setOnClickListener {
+            dialogLoc.show()
+
         }
 
 
 
-        dialog = showRemindersDialog()
+        dialogNoti = showRemindersDialog()
+        dialogLoc= showLocationDialog()
 
         return mview
     }
@@ -120,7 +135,7 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         val dialog = Dialog(context!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.popup)
+        dialog.setContentView(R.layout.popup_noti)
         dialog.window!!.setGravity(Gravity.CENTER)
         dialog.window!!.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
@@ -197,7 +212,7 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
                 try {
                   //  val date = format.parse(dtStart)
                     val xdate=format.parse(x)
-                    alarmtime.setTime(xdate)
+                    alarmtime.time = xdate
                   //  System.out.println(date)
                 } catch (e: ParseException) {
                     e.printStackTrace()
@@ -220,4 +235,57 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         }
         return dialog
     }
+
+
+    private fun showLocationDialog():Dialog{
+
+        val dialogg = Dialog(context!!)
+        dialogg.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogg.setCancelable(false)
+        dialogg.setContentView(R.layout.popup_location)
+        dialogg.window!!.setGravity(Gravity.CENTER)
+        dialogg.window!!.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+
+
+        //dialog.window!!.setBackgroundDrawableResource(R.color.trasparent)
+        dialogg.btn_cancel.setOnClickListener {
+            dialogg.dismiss()
+        }
+
+        dialogg.dt_konum.keyListener=null
+        dialogg.dt_konum.setOnClickListener {
+
+        }
+        return dialogg
+
+    }
+
+    private fun checkPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(activity!!,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Granted. Start getting the location information
+            }
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+
+
 }
