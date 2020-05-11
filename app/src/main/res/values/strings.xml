@@ -26,4 +26,6 @@
     <string name="hint_saat"><font size="20">Bir saat seçin</font></string>
     <string name="alarm1">Alarm1</string>
     <string name="notification">Notification</string>
+    <string name="channel_name">channel name</string>
+    <string name="channel_description">channel description</string>
 </resources>

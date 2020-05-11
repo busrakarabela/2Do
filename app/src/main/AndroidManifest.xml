@@ -28,10 +28,13 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".base.ReminderBroadcast"
+            android:enabled="true"/>
+
 
         <receiver
             android:name=".base.notification.AlarmReceiver"
-            android:enabled="true" />
+            android:enabled="false" />
 
         <service
             android:name=".base.notification.NotificationService"

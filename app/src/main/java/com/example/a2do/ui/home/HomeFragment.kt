@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2do.R
 import com.example.a2do.base.BaseFragment
-import com.example.a2do.base.notification.NotificationUtils
 import com.example.a2do.databinding.FragmentHomeBinding
 import com.example.a2do.model.Note
 import com.example.a2do.model.NoteList
@@ -20,8 +19,6 @@ import com.example.a2do.ui.main.MainViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
@@ -46,13 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
 
     val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
 
-
-    private val mNotificationTime = Calendar.getInstance().timeInMillis + 5000//Set after 5 seconds from the current time.
-    private lateinit var alarmtime:Calendar
-
-    private val currentdate=Calendar.getInstance()
-
-    private var mNotified = false
 
 
     override fun onCreateView(
@@ -177,11 +167,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
 
 
 
-        if (!mNotified) {
-            NotificationUtils().setNotification(mNotificationTime, context!!)
-        }
-
-
 
         return mview
     }
@@ -195,6 +180,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
         showlist.get(position).isDeleted = boolean
 
     }
+
+
+
+
 
 
 }

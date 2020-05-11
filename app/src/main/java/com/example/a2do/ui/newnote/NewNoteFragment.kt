@@ -1,20 +1,24 @@
 package com.example.a2do.ui.newnote
 
 import android.Manifest
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.app.AlarmManager.RTC_WAKEUP
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.example.a2do.R
 import com.example.a2do.base.BaseFragment
+import com.example.a2do.base.ReminderBroadcast
+import com.example.a2do.base.notification.NotificationService.Companion.CHANNEL_ID
 import com.example.a2do.databinding.FragmentNewnoteBinding
 import com.example.a2do.model.AlarmTime
 import com.example.a2do.model.Note
@@ -33,9 +37,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+
+
 class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteViewModel>() {
 
-    override fun getLayoutRes(): Int =R.layout.fragment_newnote
+    override fun getLayoutRes(): Int = com.example.a2do.R.layout.fragment_newnote
     override fun getViewModel(): Class<NewNoteViewModel> = NewNoteViewModel::class.java
 
     protected var  notes: ArrayList<Note> = ArrayList()
@@ -68,12 +74,19 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
 
      var PERMISSION_ID:Int=42
 
+
+    private val currentdate=Calendar.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val mview = inflater.inflate(R.layout.fragment_newnote, container, false)
+
+
+        createNotificationChannel()
+
 
         mview.btn_save.setOnClickListener {
             if(mview.edt_title.text.length==0){
@@ -86,6 +99,15 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
 
                 if(alarmSet){
                     noteitem.alarmTime=alarmtime
+
+                    val id = System.currentTimeMillis().toInt()
+                    val long:Long=alarmtime.timeInMillis
+                    val intent = Intent(context, ReminderBroadcast::class.java)
+                    val pendingIntent=PendingIntent.getBroadcast(context!!,id,intent,PendingIntent.FLAG_ONE_SHOT)
+
+                    val alarmManager =
+                        context!!.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+                    alarmManager!!.set(RTC_WAKEUP,long,pendingIntent)
                 }
 
                 if(notelist==null){
@@ -103,6 +125,7 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
                 editor!!.putBoolean("isEmpty",false)
                 editor!!.putString("noteList", Gson().toJson(noteLis))
                 editor!!.commit()
+
 
 
 
@@ -135,7 +158,7 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         val dialog = Dialog(context!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.popup_noti)
+        dialog.setContentView(com.example.a2do.R.layout.popup_noti)
         dialog.window!!.setGravity(Gravity.CENTER)
         dialog.window!!.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
@@ -242,7 +265,7 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         val dialogg = Dialog(context!!)
         dialogg.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogg.setCancelable(false)
-        dialogg.setContentView(R.layout.popup_location)
+        dialogg.setContentView(com.example.a2do.R.layout.popup_location)
         dialogg.window!!.setGravity(Gravity.CENTER)
         dialogg.window!!.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
@@ -284,6 +307,29 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
+    }
+
+
+    fun createNotificationChannel(){
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(com.example.a2do.R.string.channel_name)
+            val descriptionText = getString(com.example.a2do.R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager = ContextCompat.getSystemService(
+                context!!,
+                NotificationManager::class.java
+            ) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+
     }
 
 

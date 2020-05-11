@@ -10,7 +10,7 @@ import java.util.*
 class NotificationUtils {
 
 
-    fun setNotification(timeInMilliSeconds: Long, activity: Context) {
+    fun setNotification(timeInMilliSeconds: Long, activity: Context,id:Int) {
 
         //------------  alarm settings start  -----------------//
 
@@ -28,7 +28,7 @@ class NotificationUtils {
             calendar.timeInMillis = timeInMilliSeconds
 
 
-            val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(activity, id, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT)
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 
         }
