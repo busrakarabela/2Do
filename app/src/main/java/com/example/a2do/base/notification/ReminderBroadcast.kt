@@ -1,4 +1,4 @@
-package com.example.a2do.base
+package com.example.a2do.base.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context

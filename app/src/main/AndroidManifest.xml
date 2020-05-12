@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -17,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key"
+                           />
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
@@ -28,7 +33,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".base.ReminderBroadcast"
+        <receiver android:name=".base.notification.ReminderBroadcast"
             android:enabled="true"/>
 
 

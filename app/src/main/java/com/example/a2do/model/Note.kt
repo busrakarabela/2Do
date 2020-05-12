@@ -9,6 +9,7 @@ class Note (
     var baslik:String,
     var note:String,
     var isDeleted:Boolean=false,
-    var alarmTime: Calendar?
+    var alarmTime: Calendar?,
+    var location:String?
 
 )

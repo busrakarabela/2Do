@@ -1,12 +1,12 @@
 package com.example.a2do.ui.home
 
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +18,7 @@ import com.example.a2do.model.NoteList
 import com.example.a2do.ui.main.MainViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.show_note.*
 import java.text.SimpleDateFormat
 
 
@@ -58,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
             //note ekleme butonuna tıkladınğında not ekleme ekranı açılacak
             val note: Note? =null
             var mViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
-            mViewModel.newNoteLiveData.postValue(Note("","","","",false,null))
+            mViewModel.newNoteLiveData.postValue(Note("","","","",false,null,""))
 
         }
 
@@ -173,6 +174,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(),
 
 
     override fun onClick(note: Note) {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.show_note)
+        dialog.window!!.setGravity(Gravity.CENTER)
+        dialog.window!!.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        dialog.txt_baslik.keyListener=null
+        dialog.txt_icerik.keyListener=null
+        dialog.txt_reminders.keyListener=null
+        dialog.txt_locaiton.keyListener=null
+
+        dialog.txt_baslik.text=note.baslik
+        dialog.txt_icerik.text=note.note
+
+        if(note.location!=null && !note.location.equals("")){
+            dialog.txt_locaiton.text=note.location
+        }else{
+            dialog.txt_locaiton.text="Konum bilgisi yok"
+        }
+
+
+        var date:String? = null
+        val format = SimpleDateFormat("dd-MM-yyyy' 'HH:mm")
+
+        if(note.alarmTime!=null){
+            date=format.format(note.alarmTime!!.time)
+            dialog.txt_reminders.text=date.toString()
+        }else{
+            dialog.txt_reminders.text="Hatırlatıcı yok"
+        }
+
+
+        dialog.show()
+
+
+
 
     }
 

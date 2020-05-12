@@ -1,29 +1,33 @@
 package com.example.a2do.ui.newnote
 
-import android.Manifest
+//import com.google.android.gms.location.places.Places
+//import com.google.android.gms.location.places.ui.PlacePicker
 import android.app.*
 import android.app.AlarmManager.RTC_WAKEUP
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
-import com.example.a2do.R
 import com.example.a2do.base.BaseFragment
-import com.example.a2do.base.ReminderBroadcast
+import com.example.a2do.base.location.PlacesFieldSelector
 import com.example.a2do.base.notification.NotificationService.Companion.CHANNEL_ID
+import com.example.a2do.base.notification.ReminderBroadcast
 import com.example.a2do.databinding.FragmentNewnoteBinding
 import com.example.a2do.model.AlarmTime
 import com.example.a2do.model.Note
 import com.example.a2do.model.NoteList
 import com.example.a2do.ui.main.MainViewModel
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_newnote.*
 import kotlinx.android.synthetic.main.fragment_newnote.view.*
@@ -39,6 +43,8 @@ import kotlin.collections.ArrayList
 
 
 
+
+
 class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteViewModel>() {
 
     override fun getLayoutRes(): Int = com.example.a2do.R.layout.fragment_newnote
@@ -50,12 +56,14 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
     lateinit var time:AlarmTime
 
     private val alarmtime=Calendar.getInstance()
+    private var adressName:String=""
 
 
     private lateinit var dialogNoti: Dialog
     private lateinit var dialogLoc:Dialog
 
     private lateinit var allnote:NoteList
+
 
 
     var mCalendar = Calendar.getInstance()
@@ -71,21 +79,30 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
     var formathour: DateFormat= SimpleDateFormat("HH:mm")
 
     var alarmSet:Boolean=false
+    var locationSet:Boolean=false
 
-     var PERMISSION_ID:Int=42
+
+    lateinit var  mview: View
+
+    private var request_code:Int=1
 
 
-    private val currentdate=Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val mview = inflater.inflate(R.layout.fragment_newnote, container, false)
+        mview = inflater.inflate(com.example.a2do.R.layout.fragment_newnote, container, false)
 
 
         createNotificationChannel()
+
+
+        Places.initialize(activity!!.getApplicationContext(), getString(com.example.a2do.R.string.google_api_key))
+
+        //Initialise GoogleApiClient
+        //buildGoogleApiClient()
 
 
         mview.btn_save.setOnClickListener {
@@ -109,7 +126,9 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
                         context!!.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
                     alarmManager!!.set(RTC_WAKEUP,long,pendingIntent)
                 }
-
+                if(locationSet){
+                    noteitem.location=adressName
+                }
                 if(notelist==null){
                     notes.add(noteitem)
                     noteLis.notes=notes
@@ -251,8 +270,6 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
 
 
         }
-
-
         dialog.btn_cancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -276,38 +293,64 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
         }
 
         dialogg.dt_konum.keyListener=null
-        dialogg.dt_konum.setOnClickListener {
+        dialogg.dt_konum.setOnClickListener(View.OnClickListener {
+           /*if (!checkGPSEnabled()) {
+                return@OnClickListener
+            }
+            val builder = PlacePicker.IntentBuilder()
+            startActivityForResult(builder.build(activity), PLACE_PICKER_REQUEST) */
+            if (!checkGPSEnabled()) {
+                return@OnClickListener
+            }
 
-        }
+            if (!Places.isInitialized()) {
+                Places.initialize(activity!!.getApplicationContext(), getString(com.example.a2do.R.string.google_api_key))
+            }
+            val fieldSelector = PlacesFieldSelector()
+            val autocompleteIntent=
+                Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldSelector.getAllFields())
+                .build(context!!)
+            startActivityForResult(autocompleteIntent, request_code)
+
+            locationSet=true
+            dialogg.dismiss()
+
+        })
         return dialogg
 
     }
 
-    private fun checkPermissions(): Boolean {
-        return ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(activity!!,
-            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
-            PERMISSION_ID
-        )
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Granted. Start getting the location information
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == AutocompleteActivity.RESULT_OK) {
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            adressName=place.name.toString()
+            mview.edt_location.setText(adressName)
+        }else if (resultCode == AutocompleteActivity.RESULT_ERROR){
+            val status = Autocomplete.getStatusFromIntent(data!!)
+        }else if (resultCode == AutocompleteActivity.RESULT_CANCELED) {
+            // The user canceled the operation.
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
+  /*  private fun buildGoogleApiClient() {
+        mGoogleApiClient = GoogleApiClient.Builder(context!!)
+            .addApi(Places.GEO_DATA_API)
+            .addApi(Places.PLACE_DETECTION_API)
+            .enableAutoManage(activity!!, null)
+            .build()
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+       if (requestCode == PLACE_PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
+            val place = PlacePicker.getPlace(data, context)
+            val toastMsg = String.format("Placeeeeeeeeeeeeeeeeeeeee: %s", place.name)
+            dt_konum.setText(place!!.name.toString().plus("\n".plus(place!!.address)))
+            Toast.makeText(activity,toastMsg, Toast.LENGTH_SHORT).show()
+        }
+    }*/
+
 
 
     fun createNotificationChannel(){
@@ -331,6 +374,30 @@ class NewNoteFragment(note: Note): BaseFragment<FragmentNewnoteBinding,NewNoteVi
 
 
     }
+
+   private fun isLocationEnabled(): Boolean {
+       var locationManager = ContextCompat.getSystemService(context!!, LocationManager::class.java) as LocationManager
+       return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager!!.isProviderEnabled(
+           LocationManager.NETWORK_PROVIDER)
+   }
+
+    private fun checkGPSEnabled(): Boolean {
+        if (!isLocationEnabled())
+            showAlert()
+        return isLocationEnabled()
+    }
+    private fun showAlert() {
+        val dialog = AlertDialog.Builder(context)
+        dialog.setTitle("Enable Location")
+            .setMessage("Locations Settings is set to 'Off'.\nEnable Location to use this app")
+            .setPositiveButton("Location Settings") { paramDialogInterface, paramInt ->
+                val myIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(myIntent)
+            }
+            .setNegativeButton("Cancel") { paramDialogInterface, paramInt -> }
+        dialog.show()
+    }
+
 
 
 

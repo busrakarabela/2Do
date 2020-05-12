@@ -1,25 +1,23 @@
 package com.example.a2do.ui.main
 
 import android.os.Bundle
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Menu
 import androidx.databinding.ViewDataBinding
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import androidx.navigation.ui.AppBarConfiguration
 import com.example.a2do.R
 import com.example.a2do.base.BaseActivity
-import com.example.a2do.base.notification.NotificationUtils
 import com.example.a2do.model.Note
-import com.example.a2do.ui.tag.TagFragment
 import com.example.a2do.ui.home.HomeFragment
 import com.example.a2do.ui.newnote.NewNoteFragment
+import com.example.a2do.ui.tag.TagFragment
 import com.example.a2do.ui.trash.TrashFragment
 import com.example.a2do.util.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.custom_drawer.*
 import kotlinx.android.synthetic.main.custom_drawer.view.*
-import java.util.*
 
 class MainActivity :  BaseActivity<ViewDataBinding, MainViewModel>() {
 
@@ -32,7 +30,7 @@ class MainActivity :  BaseActivity<ViewDataBinding, MainViewModel>() {
     //private var mNotified = false
 
     var oldFragment:FragmentType? = null
-    private var notee:Note=Note("","","","",false,null)
+    private var notee:Note=Note("","","","",false,null,"")
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
